@@ -1,0 +1,15 @@
+Package: rwikipapa
+Title: 'WikiPapa' 'API'
+Version: 0.0.1
+Authors@R: 
+    person("Omar", "Benites", , "obacc07@gmail.com", role = c("aut", "cre"),
+           comment = c(ORCID = "YOUR-ORCID-ID"))
+Description: An R client to access the 'WikiPapa' 'API'. WikiPapa is a web-based platform that show information about native potato varieties from different parts of the world.
+License: MIT + file LICENSE
+Encoding: UTF-8
+BugReports: https://github.com/omarbenites/rwikipapa/issues
+Roxygen: list(markdown = TRUE)
+Imports: 
+      jsonlite,
+      tidyverse
+RoxygenNote: 7.1.2
