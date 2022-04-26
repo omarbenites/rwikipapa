@@ -11,5 +11,8 @@ BugReports: https://github.com/omarbenites/rwikipapa/issues
 Roxygen: list(markdown = TRUE)
 Imports: 
       jsonlite,
-      tidyverse
+      tidyverse,
+      anytime,
+      summarytools,
+      janitor
 RoxygenNote: 7.1.2
