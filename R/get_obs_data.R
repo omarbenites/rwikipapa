@@ -9,14 +9,14 @@
 
 get_observation_data <- function(url="https://wikipapa.org/api/export/", 
                                  call="observations-data", 
-                                 mdate = "2022-04-11" ){
+                                 idate = "2022-04-11" ){
   #obsurl <- "https://wikipapa.org/api/export/observations-data"
   #obs_data<- jsonlite::fromJSON(obsurl)$data 
   obsurl <- paste0(url,call)
   obs_data <- jsonlite::fromJSON(obsurl)$data  
   raw_data <- obs_data
   obs_data$observation_date <- anytime::anydate(obs_data$observation_date)
-  obs_data <- obs_data %>% dplyr::filter(observation_date >= mdate) %>% 
+  obs_data <- obs_data %>% dplyr::filter(observation_date >= {{idate}}) %>% 
     #filter(!user_id %in% c(48,40,49,38,47,39,35 )) %>% 
     mutate(variety_name = tolower(variety_name)) %>% 
     mutate(is_original = as.character(is_original)) %>% 

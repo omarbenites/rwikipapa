@@ -7,7 +7,7 @@
 get_observation_data(
   url = "https://wikipapa.org/api/export/",
   call = "observations-data",
-  mdate = "2022-04-11"
+  idate = "2022-04-11"
 )
 }
 \arguments{
