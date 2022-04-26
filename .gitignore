@@ -41,4 +41,5 @@ vignettes/*.pdf
 #ignore folder
 
 scripts/Fuente/*.xlsx
-
+docs/reportes
+docs/guidelines

@@ -1,33 +1,33 @@
-
-get_summary_category <- function(datos, variable, order = TRUE){
-  summary_variable <- summarytools::freq(datos[,variable]) 
-  summary_variable <- as.data.frame.matrix(summary_variable) %>% 
-                      rownames_to_column(var = "category") %>% 
-                      janitor::clean_names() %>% 
-                      mutate(
-                             category = case_when(
-                                         is.na(category)~"Sin identificar",
-                                         category=="<NA>"~"Sin identificar",
-                                         TRUE~as.character(category)
-                                        ) 
-                            )
- 
+#' Mutate missing category's label
+#'
+#' @param variable data.frame data from the catalogue
+#' @param label character new label for the missing category
+#' @importFrom dplyr case_when mutate
+#' @export 
+#' 
+mutate_missing_catlabel <- function(dfr, variable, label = "No identificado"){
   
-  
-}
-
-
-
-mutate_missing_category <- function(data, label){
-    datos <- datos %>% mutate( 
-                              
-                              )
-  
+  out <- datos[,variable] %>% pull()
+  out <- case_when(
+                    is.na(out)~"Sin identificar",
+                    out=="<NA>"~"Sin identificar",
+                    TRUE~as.character(out)
+                  ) 
+  dfr[,variable] <- out
+#TODO: MODIFICAR OUT EN LA COLUMNA VARIABLE
   
 }
-
-
-
+  
+  
+  # dfr <- dfr %>%
+  #           mutate(
+  #             variable = case_when(
+  #                         is.na(variable)~"Sin identificar",
+  #                         variable=="<NA>"~"Sin identificar",
+  #                         TRUE~as.character(variable)
+  #                         ) 
+  #           )
+          
 
 
 
