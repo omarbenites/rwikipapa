@@ -105,7 +105,7 @@ dashboardPage(
       tabItem(tabName = "observation",
               fluidRow(
                 box(
-                  title = "Catalog data",
+                  title = "Observation data",
                   id = "tabset2", width = 12,
                   tabPanel(
                     "Tab2",

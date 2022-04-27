@@ -56,7 +56,7 @@ get_observational_data <- function(url="https://wikipapa.org/api/export/",
         str_detect(farmer_name,"esther atahuaman carhuachagua")~"Esther Atahuaman Carhuachagua",
         str_detect(farmer_name,"david basualdo")~"David Basualdo",
         str_detect(farmer_name,"carhuaz")~"Juan Manuel Carhuaz",
-        TRUE ~ "Otros varios"
+        TRUE ~ "Otros-Desconocidos"
       )
     ) %>% 
     mutate(farmer_name =  str_to_title(farmer_name)) %>%
