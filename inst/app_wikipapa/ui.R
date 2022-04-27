@@ -78,7 +78,7 @@ dashboardPage(
             ),
             
             tabItem(tabName = "catalog",
-                    h2("Catalog data"),
+                    #h2("Catalog data"),
                     fluidRow(
                         tabBox(
                             title = "Catalog data",

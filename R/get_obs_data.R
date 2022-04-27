@@ -7,7 +7,7 @@
 #' @export
 #' 
 
-get_observation_data <- function(url="https://wikipapa.org/api/export/", 
+get_observational_data <- function(url="https://wikipapa.org/api/export/", 
                                  call="observations-data", 
                                  idate = "2022-04-11" ){
   #obsurl <- "https://wikipapa.org/api/export/observations-data"
