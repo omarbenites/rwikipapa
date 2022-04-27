@@ -339,6 +339,47 @@ server <- function(input, output, session) {
             
         }
         
+        if(input$wkp_grp1=="farmer_name"){
+            
+            nobagri_sum <- get_summary_varcat(dfr = obs_data, catvar = "farmer_name")  %>%                       filter(category!="Sin identificar") %>% 
+                filter(category!="Otros Varios")
+            
+            nobagri_graf <- ggplot(data = nobagri_sum, aes(x = reorder(category, freq), y = freq)) +
+                geom_bar(stat = "identity",fill="#b1dba9") +
+                geom_text(
+                    aes(label = freq),  
+                    hjust = -0.1, color = "black", size = 4,
+                    fontface = "bold"
+                ) + 
+                coord_flip()+
+                scale_y_continuous(limits = c(NA, max(nobagri_sum$freq)+13), expand = c(0.01,0.01)) +
+                #scale_x_continuous(expand = c(.01, .01))+
+                scale_fill_identity(guide = "none") +
+                xlab("Number of potato observations") +
+                ylab("Participants") + 
+                
+                labs(title = "Participants with the most collected potato observations",
+                     subtitle = "WikiPapa Contest",
+                     caption= paste0( "N.Obs=", nrow(obs_data),". Source: wikipapa.org" ))+
+                theme_minimal() +
+                #ylim(NA, 63) +
+                theme(
+                    axis.ticks.x = element_blank(),
+                    panel.grid.major.y = element_blank(),
+                    panel.grid.minor.y = element_blank(),
+                    plot.title = element_text(size = 14, margin = margin(10, 0, 0, 0)),
+                    plot.subtitle = element_text(size = 12, margin = margin(10, 0, 10, 0), color = "gray"),
+                    #axis.text.x = element_blank(),
+                    axis.text.y = element_text(size = 10, color = "#323232")
+                )#+
+            #      gghighlight(user_id == 57, user_id ==81 )
+            
+            out <- nobagri_graf
+            
+            
+        }
+        
+        
         out
         # barplot(WorldPhones[,input$region]*1000, 
         #         main=input$region,

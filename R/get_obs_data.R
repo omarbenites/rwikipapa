@@ -36,9 +36,31 @@ get_observational_data <- function(url="https://wikipapa.org/api/export/",
         str_detect(observation_notes,"sf")~ "San Francisco",
         str_detect(observation_notes,"agroindustrial")~ "IE Agroindustrial",
         str_detect(observation_notes,"agroindustrial")~ "IE Agroindustrial",
-        str_detect(observation_notes,"c\\u00e9sar p\\u00e9rez arauco")~ "Cesar P\\u00e9rez Arauco",
+        str_detect(observation_notes,"cesar pérez arauco")~ "Cesar Perez Arauco",
         TRUE ~ "Otros varios"
       )
-    ) %>% slice(1:803)
+    )  %>% 
+    mutate(farmer_name = tolower(farmer_name)) %>% 
+    mutate(
+      farmer_name = case_when( 
+        str_detect(farmer_name,"alda")~ "Alda Chavez Callupe",
+        str_detect(farmer_name,"elmer")~ "Elmer Chavez",
+        str_detect(farmer_name,"undac")~ "UN. Daniel Alcides Carrion",
+        str_detect(farmer_name,"nacional daniel")~ "UN. Daniel Alcides Carrion",
+        str_detect(farmer_name,"victor")~ "Victor Condor",
+        str_detect(farmer_name,"sinche")~ "Juan Vasquez Sinche",
+        str_detect(farmer_name,"alda haydee chavez callupe")~ "Alda Haydee Chaves Callupe",
+        str_detect(farmer_name,"jaime cabello")~ "Jaime Cabello",
+        str_detect(farmer_name,"macha pizarro")~ "Hernan Macha Pizarro",
+        str_detect(farmer_name,"antonio cordova vega")~"Antonio Cordova Vega",
+        str_detect(farmer_name,"esther atahuaman carhuachagua")~"Esther Atahuaman Carhuachagua",
+        str_detect(farmer_name,"david basualdo")~"David Basualdo",
+        str_detect(farmer_name,"carhuaz")~"Juan Manuel Carhuaz",
+        TRUE ~ "Otros varios"
+      )
+    ) %>% 
+    mutate(farmer_name =  str_to_title(farmer_name)) %>%
+    slice(1:803)
+
 }
 

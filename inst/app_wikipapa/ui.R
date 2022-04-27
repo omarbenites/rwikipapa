@@ -19,24 +19,24 @@ library(dplyr)
 
 
 dashboardPage(
-    title="WikiPAPA Dashboard",
+  title="WikiPAPA Dashboard",
+  
+  dashboardHeader(
+    title = tags$a(href='https://wikipapa.org/',
+                   tags$img(src='wikipapa-logo.png', height = 30))
+  ),
+  dashboardSidebar(
+    sidebarMenu(
+      br(),
+      #menuItem("About", tabName = "about", icon = icon("home")),
+      menuItem("Catalog data", tabName = "catalog", icon = icon("leaf")),
+      menuItem("Observation data", tabName = "observation", icon = icon("user"))
+    )
+  ),
+  dashboardBody(
     
-    dashboardHeader(
-        title = tags$a(href='https://wikipapa.org/',
-                       tags$img(src='wikipapa-logo.png', height = 30))
-    ),
-    dashboardSidebar(
-        sidebarMenu(
-            br(),
-            #menuItem("About", tabName = "about", icon = icon("home")),
-            menuItem("Catalog data", tabName = "catalog", icon = icon("leaf")),
-            menuItem("Observation data", tabName = "observation", icon = icon("user"))
-        )
-    ),
-    dashboardBody(
-        
-        tags$head(tags$style(HTML(
-            '.myClass { 
+    tags$head(tags$style(HTML(
+      '.myClass { 
         font-size: 20px;
         line-height: 50px;
         text-align: left;
@@ -46,13 +46,13 @@ dashboardPage(
         color: white;
       }
     '))),
-        tags$script(HTML('
+    tags$script(HTML('
       $(document).ready(function() {
         $("header").find("nav").append(\'<span class="myClass"> Statistical dashboard </span>\');
       })
      ')),
-        
-        tags$head(tags$style(HTML('
+    
+    tags$head(tags$style(HTML('
         /* logo */
         .skin-blue .main-header .logo {
                               background-color: #E7154A;
@@ -70,67 +70,64 @@ dashboardPage(
 
         
                               '))),
-        
-        
-        tabItems(
-            tabItem(tabName = "about",
-                    h2("About WikiPAPA dashboard")
-            ),
-            
-            tabItem(tabName = "catalog",
-                    #h2("Catalog data"),
+    
+    
+    tabItems(
+      tabItem(tabName = "about",
+              h2("About WikiPAPA dashboard")
+      ),
+      
+      tabItem(tabName = "catalog",
+              fluidRow(
+                box(
+                  title = "Catalog data",
+                  id = "tabset1", width = 12,
+                  tabPanel(
+                    "Tab1",
                     fluidRow(
-                        tabBox(
-                            title = "Catalog data",
-                            id = "tabset1", height = "500px", width = 12,
-                            tabPanel(
-                                "Tab1",
-                                fluidRow(
-                                    column(width = 4,
-                                           uiOutput("grp1_dsb_wkp")
-                                           #selectInput("region", "Region:", 
-                                           #   choices=colnames(WorldPhones))
-                                           
-                                    ),
-                                    column(width = 4,
-                                           uiOutput("grp2_dsb_wkp")
-                                           # selectInput("variable2", "Variable2:",
-                                           #             c("Cylinders" = "cyl",
-                                           #               "Transmission" = "am",
-                                           #               "Gears" = "gear"))
-                                    ),
-                                    column(width = 4,
-                                           selectInput("variable3", "Variable3:",
-                                                       c("Cylinders" = "cyl",
-                                                         "Transmission" = "am",
-                                                         "Gears" = "gear"))
-                                    )
-                                ),
-                                fluidRow(
-                                    column(width = 12,
-                                           plotOutput("bargraph")
-                                    )
-                                )
-                            )
-                        )
-                    )
-            ),
-            
-            tabItem(tabName = "observation",
-                    h2("Observation data"),
+                      column(width = 4,
+                             uiOutput("")
+                      ),
+                      column(width = 4,
+                             uiOutput("")
+                      )
+                    ),
                     fluidRow(
-                        tabBox(
-                            title = "Observation data",
-                            id = "tabset1", height = "500px", width = 12,
-                            tabPanel(
-                                "Tab1",
-                                "First tab content"
-                            )
-                        )
+                      column(width = 12,
+                             plotOutput("")
+                      )
                     )
-            )
-        )
+                  )
+                )
+              )
+      ),
+      
+      tabItem(tabName = "observation",
+              fluidRow(
+                box(
+                  title = "Catalog data",
+                  id = "tabset2", width = 12,
+                  tabPanel(
+                    "Tab2",
+                    fluidRow(
+                      column(width = 4,
+                             uiOutput("grp1_dsb_wkp")
+                      ),
+                      column(width = 4,
+                             uiOutput("grp2_dsb_wkp")
+                      )
+                    ),
+                    fluidRow(
+                      column(width = 12,
+                             plotOutput("bargraph")
+                      )
+                    )
+                  )
+                )
+              )
+      )
     )
+  )
 )
 
 
