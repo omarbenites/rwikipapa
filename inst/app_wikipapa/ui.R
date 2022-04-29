@@ -86,15 +86,20 @@ dashboardPage(
                     "Tab1",
                     fluidRow(
                       column(width = 4,
-                             uiOutput("")
+                             uiOutput("var_ctl_wkp")
                       ),
                       column(width = 4,
-                             uiOutput("")
+                             uiOutput("grp_ctl_wkp")
+                      ),
+                      column(width = 4,
+                             uiOutput("div_ctl_wkp")
                       )
                     ),
                     fluidRow(
+                      
                       column(width = 12,
-                             plotOutput("")
+                             #shinycustomloader::withLoader(plotOutput('plot_ctl_wkp'), type = "html", loader = "loader4"),
+                             plotOutput("plot_ctl_wkp")
                       )
                     )
                   )

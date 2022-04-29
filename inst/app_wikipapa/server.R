@@ -4,7 +4,9 @@ server <- function(input, output, session) {
     
     user_data <- reactiveValues(users = NULL)
     userurl <- "https://wikipapa.org/api/variety-observation/users"
-   
+    
+    varie_values <- reactiveValues(variedades = NULL)
+     
     observe({
         
         shiny::withProgress(message = "Loading Data from WikiPapa",value= 0,{
@@ -13,7 +15,10 @@ server <- function(input, output, session) {
             #NOTE Finally, we always need pandoc installer.
             #ToDo: In case of poor conection print a message and do not show anything
             
+            #Get variety data
             user_data$data <- fromJSON(userurl)$data
+            
+            
             
             incProgress(1/5, detail = paste("..."))
             
@@ -22,6 +27,12 @@ server <- function(input, output, session) {
                                              call = "observations-data",
                                              idate = "2022-04-11"
                                              )
+            
+            varie_data <- get_catalogue_data(url = "https://wikipapa.org/api/export/",
+                               call="varieties-data"
+                               )
+            varie_values$hot_varie <- varie_data
+            
             incProgress(3/5, detail = paste("..."))
             out <- obs_data #list(sp_base_credentials  = sp_base_credentials , trial_table = trial_table)
             incProgress(5/5, detail = paste("..."))
@@ -35,8 +46,12 @@ server <- function(input, output, session) {
             
             wkp_obs_data <- values$hot_bdata
             variables <- names(wkp_obs_data)
+            variables <- c("afiliacion" , "sex" , "is_original",
+                           "variety_name", "username", "user_id",
+                           "farmer_name")
             
             selectInput('wkp_grp1', 'Select group', c(Choose='', variables), selectize=TRUE)
+            
         })
         
         
@@ -46,13 +61,18 @@ server <- function(input, output, session) {
             
             wkp_obs_data <- values$hot_bdata
             variables <- names(wkp_obs_data)
+            variables <- c("afiliacion" , "sex" , "is_original",
+                           "variety_name", "username", "user_id",
+                           "farmer_name")
             
             selectInput('wkp_grp2', 'Select variable', c(Choose='', variables), selectize=TRUE)
             
         })
+        
     })
     
-    
+################# Observational Data ##########################
+        
     output$bargraph <- renderPlot({
         
         req(input$wkp_grp1)
@@ -345,7 +365,7 @@ server <- function(input, output, session) {
                 filter(category!="Otros Varios")
             
             nobagri_graf <- ggplot(data = nobagri_sum, aes(x = reorder(category, freq), y = freq)) +
-                geom_bar(stat = "identity",fill="#b1dba9") +
+                geom_bar(stat = "identity",fill="#5b83c2") +
                 geom_text(
                     aes(label = freq),  
                     hjust = -0.1, color = "black", size = 4,
@@ -355,11 +375,11 @@ server <- function(input, output, session) {
                 scale_y_continuous(limits = c(NA, max(nobagri_sum$freq)+13), expand = c(0.01,0.01)) +
                 #scale_x_continuous(expand = c(.01, .01))+
                 scale_fill_identity(guide = "none") +
-                xlab("Number of potato observations") +
-                ylab("Participants") + 
+                xlab("Number of observations") +
+                ylab("Farmers") + 
                 
-                labs(title = "Participants with the most collected potato observations",
-                     subtitle = "WikiPapa Contest",
+                labs(title = "Number of observations per farmer",
+                     subtitle = "Bioversity Contest",
                      caption= paste0( "N.Obs=", nrow(obs_data),". Source: wikipapa.org" ))+
                 theme_minimal() +
                 #ylim(NA, 63) +
@@ -387,8 +407,120 @@ server <- function(input, output, session) {
         #         xlab="Year")
     })
     
+###########End Observational Data ###    
+    
+##### Catalogue Data ###########################################
+    
+    output$var_ctl_wkp  <- renderUI({
+        
+        #req(input$connect_single_sbase)
+        
+        varie_data <- varie_values$hot_varie
+        variables <- names(varie_data)
+        #variables <- c("afiliacion" , "sex" , "is_original",
+        #               "variety_name", "username", "user_id",
+        #               "farmer_name")
+        
+        selectInput('sel_wkp_ctl_var', 'Select variable', 
+                    c(Choose='', variables), selectize=TRUE)
+        
+    })
+    
+    
+    output$grp_ctl_wkp  <- renderUI({
+        
+        varie_data <- varie_values$hot_varie
+        variables <- names(varie_data)
+        
+        #wkp_obs_data <- values$hot_bdata
+        #variables <- names(wkp_obs_data)
+        #variables <- c("afiliacion" , "sex" , "is_original",
+        #               "variety_name", "username", "user_id",
+        #               "farmer_name")
+        
+        selectInput('sel_wkp_ctl_grp', 'Grouped by', c(Choose='', variables), selectize=TRUE)
+        
+    })
+    
+    output$div_ctl_wkp  <- renderUI({
+        
+        varie_data <- varie_values$hot_varie
+        variables <- names(varie_data)
+        
+        #wkp_obs_data <- values$hot_bdata
+        #variables <- names(wkp_obs_data)
+        #variables <- c("afiliacion" , "sex" , "is_original",
+        #               "variety_name", "username", "user_id",
+        #               "farmer_name")
+        
+        selectInput('sel_wkp_ctl_div', 'Divided by', c(Choose='', variables), selectize=TRUE)
+        
+    })
+    
+    
+    ss <- reactive({
+        
+        req(input$sel_wkp_ctl_var)
+        
+        print(input$sel_wkp_ctl_var)
+        print(input$sel_wkp_ctl_grp)
+        
+        if(!is.null(input$sel_wkp_ctl_var)){
+            
+            varie_data <- varie_values$hot_varie
+            print(input$sel_wkp_ctl_var)
+            print(input$sel_wkp_ctl_div)
+            
+            smry_varcat <- get_summary_varcat(dfr =varie_data, catvar = input$sel_wkp_ctl_var)
+            #print(smry_varcat)
+            
+            out <- bar_horizontal(smry_varcat, "category" ,"percent_total")        
+            
+        }
+        if(input$sel_wkp_ctl_var!="" && input$sel_wkp_ctl_grp!="") {
+            
+            #req(input$sel_wkp_ctl_grp)
+            
+            varie_data <- varie_values$hot_varie
+            
+            
+            smry_groupvar <- get_summary_groupvar(dfr = varie_data,
+                                                  group= input$sel_wkp_ctl_grp , 
+                                                  variable= input$sel_wkp_ctl_var
+                                                 )
+            print(smry_groupvar)
+            #categories <-  smry_varcat
+            
+            out <- bar_stacked_horizontal(smry_groupvar, 
+                                          x= input$sel_wkp_ctl_grp, 
+                                          y="percent_answers", 
+                                          variable=input$sel_wkp_ctl_var
+                                         )
+        }
+        
+        out
+        
+    })
+    
+    output$plot_ctl_wkp<- renderPlot({
+
+        
+        ss()
+
+    })
+    
+    
+################################################################    
+    
+
     
     
     
+        
+    
+    
+    
+    
+        
 }
 
