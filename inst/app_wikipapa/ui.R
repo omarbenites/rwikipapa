@@ -85,6 +85,8 @@ dashboardPage(
                   tabPanel(
                     "Tab1",
                     fluidRow(
+                      
+                      
                       column(width = 4,
                              uiOutput("var_ctl_wkp")
                       ),
@@ -99,7 +101,8 @@ dashboardPage(
                       
                       column(width = 12,
                              #shinycustomloader::withLoader(plotOutput('plot_ctl_wkp'), type = "html", loader = "loader4"),
-                             plotOutput("plot_ctl_wkp")
+                             plotOutput("plot_ctl_wkp"),
+                             plotlyOutput("myplot2")
                       )
                     )
                   )
@@ -125,6 +128,7 @@ dashboardPage(
                     fluidRow(
                       column(width = 12,
                              plotOutput("bargraph")
+                            
                       )
                     )
                   )

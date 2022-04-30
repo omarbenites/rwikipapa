@@ -7,6 +7,7 @@ df <- tibble(x=seq(20), y=seq(20), type=c(rep("a", 10), rep("b", 10)))
 ui <- fluidPage(
   mainPanel(
     plotOutput("myplot" ),
+    
     plotlyOutput("myplot2" )
     
   )

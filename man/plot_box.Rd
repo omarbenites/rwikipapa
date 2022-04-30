@@ -4,7 +4,7 @@
 \alias{plot_box}
 \title{Plot box}
 \usage{
-plot_box(variable, group = NULL, dots = c("no", "yes"), dfr)
+plot_box(variable, group = NULL, dots = c("no", "yes"), facet = "", dfr)
 }
 \arguments{
 \item{variable}{variable}
@@ -12,6 +12,8 @@ plot_box(variable, group = NULL, dots = c("no", "yes"), dfr)
 \item{group}{group}
 
 \item{dots}{character Whether yes, show dots}
+
+\item{facet}{character facet off}
 
 \item{dfr}{data}
 }

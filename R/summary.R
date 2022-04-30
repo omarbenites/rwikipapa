@@ -43,7 +43,8 @@ get_summary_varcat <- function(dfr, catvar, total = FALSE){
 #' @export
 #' 
 
-get_summary_groupvar <- function(dfr, group, variable ){
+get_summary_groupvar <- function(dfr, group, variable )
+  {
   
   out <- dfr %>% group_by( across({{group}}), across({{variable}}) ) %>% 
                  count(name = "ncont") %>%  

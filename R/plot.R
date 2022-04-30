@@ -125,10 +125,12 @@ bar_stacked_horizontal <- function(smry_data, x, y, variable,
 #' @param variable variable
 #' @param group group
 #' @param dots character Whether yes, show dots
+#' @param facet character facet off  
 #' @param dfr data
 #' @export
 
-plot_box <- function(variable, group = NULL, dots = c("no", "yes"), dfr) {
+plot_box <- function(variable, group = NULL, dots = c("no", "yes"), 
+                     facet="", dfr) {
   
   dots <- match.arg(dots)
   
@@ -150,18 +152,27 @@ plot_box <- function(variable, group = NULL, dots = c("no", "yes"), dfr) {
         geom_boxplot(na.rm = TRUE) +
         xlab("") +
         geom_jitter(width = 0.35)
+      
     } else {
       out <- ggplot(dfr, aes_string(group, variable,color = group)) +
         geom_boxplot(na.rm = TRUE) +
         geom_jitter(width = 0.35)
     }
   }
-  out + theme_classic() +
+  
+  out + theme_minimal() +
         theme(axis.text.x = element_blank(),
               axis.title.x = element_blank(),
               panel.grid = element_blank(),
               legend.position = "top") 
   
+  if(facet!=""){
+   out +  facet_wrap(facet)  
+  }
+  out
+  
 }
+
+
 
 

@@ -462,22 +462,38 @@ server <- function(input, output, session) {
         
         req(input$sel_wkp_ctl_var)
         
-        print(input$sel_wkp_ctl_var)
-        print(input$sel_wkp_ctl_grp)
         
-        if(!is.null(input$sel_wkp_ctl_var)){
+        varie_data <- varie_values$hot_varie
+        ctl <- varie_data
+        quant <- c("tuber_yield",
+                   "zinc_concentration_in_fresh_weight",
+                   "potassium_concentration_in_fresh_weight",
+                   "phosphorus_concentration_in_fresh_weight",
+                   "vitamin_C_concentration_in_fresh_weight")
+        # if(is.element(input$sel_wkp_ctl_var,quant) && class(ctl[,input$sel_wkp_ctl_var])=="numeric" && input$sel_wkp_ctl_grp!="" && 
+        #    input$sel_wkp_ctl_div!="") {
+        #     
+        #     varie_data <- varie_values$hot_varie
+        #     
+        #     out <-  plot_box(variable = input$sel_wkp_ctl_var, 
+        #                      group = input$sel_wkp_ctl_grp, 
+        #                      dots = "yes", 
+        #                      facet = input$sel_wkp_ctl_div,
+        #                      dfr = varie_data
+        #     )
             
-            varie_data <- varie_values$hot_varie
-            print(input$sel_wkp_ctl_var)
-            print(input$sel_wkp_ctl_div)
-            
+        #}
+        
+        
+        if(!is.null(input$sel_wkp_ctl_var) && class(varie_data[,input$sel_wkp_ctl_var])=="character"){
+          
             smry_varcat <- get_summary_varcat(dfr =varie_data, catvar = input$sel_wkp_ctl_var)
             #print(smry_varcat)
             
             out <- bar_horizontal(smry_varcat, "category" ,"percent_total")        
             
         }
-        if(input$sel_wkp_ctl_var!="" && input$sel_wkp_ctl_grp!="") {
+        if(input$sel_wkp_ctl_var!="" && input$sel_wkp_ctl_grp!="" && class(varie_data[,input$sel_wkp_ctl_var])=="character") {
             
             #req(input$sel_wkp_ctl_grp)
             
@@ -497,16 +513,37 @@ server <- function(input, output, session) {
                                           variable=input$sel_wkp_ctl_var
                                          )
         }
-        
+       
+        if(class(varie_data[,input$sel_wkp_ctl_var])=="numeric") {
+
+            varie_data <- varie_values$hot_varie
+
+            if(input$sel_wkp_ctl_grp!=""){
+                out <- ggplot(varie_data, aes_string(shQuote(""), input$sel_wkp_ctl_var, color = input$sel_wkp_ctl_grp) ) +
+                    geom_boxplot() + geom_jitter()
+            } else{
+                out <- ggplot(varie_data, aes_string(shQuote(""), input$sel_wkp_ctl_var) ) +
+                    geom_boxplot() + geom_jitter()  
+            }
+            
+            
+            if(input$sel_wkp_ctl_div!=""){
+              out <-   out +  facet_wrap(input$sel_wkp_ctl_div)
+            }
+        }
+         
         out
+           
+       
         
     })
     
     output$plot_ctl_wkp<- renderPlot({
-
-        
         ss()
-
+    })
+    
+    output$myplot2 <- renderPlotly({
+        ggplotly(ss())
     })
     
     

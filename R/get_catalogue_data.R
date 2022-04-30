@@ -23,8 +23,11 @@ get_catalogue_data <- function(url="https://wikipapa.org/api/export/",
                     mutate(Potassium_concentration_in_fresh_weight= as.numeric(Potassium_concentration_in_fresh_weight)) %>% 
                     mutate(Phosphorus_concentration_in_fresh_weight = as.numeric(Phosphorus_concentration_in_fresh_weight)) %>% 
                     mutate(Vitamin_C_concentration_in_fresh_weight = as.numeric(Vitamin_C_concentration_in_fresh_weight)) %>% 
+                    mutate(is_original=as.character(is_original)) %>%                   
                     janitor::clean_names()
-    
+  ctl_data <- ctl_data %>% dplyr::filter(is_original=="TRUE")
+  #ctl_data <- ctl_data %>% mutate(is_original=as.logical(is_original))
+  
   #raw_data <- obs_data
   #ctl_data$observation_date <- anytime::anydate(ctl_data$observation_date)
   ctl_data
