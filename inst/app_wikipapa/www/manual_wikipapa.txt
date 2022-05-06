@@ -1,0 +1,30 @@
+<h2> Manual of WikiPapa Dashboard </h2>
+
+<p>
+This documentation contains all essential information for the user to use HIDAP. It includes step-by-step procedures on how to create material lists,
+fieldbooks, reports and graphics. Once this document has been read and revised, the user will be capable to navigate HIDAP effectively.
+</p>
+
+
+<h3> Catalogue data </h3>
+
+
+<h5> Step 1 </h5>
+
+<img src="https://raw.githubusercontent.com/omarbenites/tblrepimg/main/cat_step01_select_variable.jpg" alt="select" class="center"> 
+
+
+<h5> Categorical variable </h5>
+
+<img src="https://raw.githubusercontent.com/omarbenites/tblrepimg/main/cat_plot01_select_variable.jpg  alt="select cat variable" class="center"> 
+
+
+<h5> Numerical variable </h5>
+
+
+<img src="https://raw.githubusercontent.com/omarbenites/tblrepimg/main/num_plot01_select_variable.jpg alt="select cat variable" class="center"> 
+
+<h5> Chart by group </h5>
+
+Categorical variable
+

@@ -1,0 +1,18 @@
+<h2> Manual of WikiPapa Dashboard </h2>
+
+<p>
+The aims to help users how to use the `Wikipapa Dashboard`. Currently, it consumes data from two sources: the *catalog data* and the *observation data*.
+</p>
+
+
+<h3> Catalog data
+
+<p>
+The catalog data provide data from `665` potato varieties that have been curated with information regards to morphological characteristics, agronomic performance, nutrient concentration, and post-hvarvest performance.
+
+</p>
+
+ <img src="https://raw.githubusercontent.com/omarbenites/tblrepimg/main/select_variable.jpg" alt="Paris" class="center"> 
+
+
+

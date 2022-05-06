@@ -30,7 +30,8 @@ dashboardPage(
       br(),
       #menuItem("About", tabName = "about", icon = icon("home")),
       menuItem("Catalog data", tabName = "catalog", icon = icon("leaf")),
-      menuItem("Observation data", tabName = "observation", icon = icon("user"))
+      menuItem("Observation data", tabName = "observation", icon = icon("user")),
+      menuItem("Manual", tabName = "manual", icon = icon("book"))
     )
   ),
   dashboardBody(
@@ -134,7 +135,16 @@ dashboardPage(
                   )
                 )
               )
+      ),
+      tabItem(tabName = "manual",
+              fluidRow(
+              column(width = 12,style = "background-color:#FFFFFF;",
+                    includeMarkdown("include.md")
+                    #shiny::includeHTML("www/manual_wikipapa.txt")
+              )
+              )
       )
+      
     )
   )
 )

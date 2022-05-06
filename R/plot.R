@@ -24,8 +24,8 @@ bar_horizontal <- function(smry_data, x, y, div_by =NULL ){
     scale_fill_identity(guide = "none") +
     coord_flip() +
     xlab("")+
-    ylab("Porcentaje por cada especie") + 
-    ggtitle(label = "Distribucion of species",subtitle = "Base de datos de WikiPapa.org")+
+    ylab("Percentage") + 
+    ggtitle(label = paste0("Distribucion of ", x),subtitle = "Base de datos de WikiPapa.org")+
     theme_minimal() +
     #ylim(NA, 63) +
     theme(
@@ -97,8 +97,8 @@ bar_stacked_horizontal <- function(smry_data, x, y, variable,
             scale_fill_viridis_d() +
             labs(title = NULL)+#)"How good is the education at your school?",
             xlab("")+
-            ylab("Porcentaje por cada especie") + 
-            ggtitle(label = "Distribucion of species",subtitle = "Base de datos de WikiPapa.org")+
+            ylab("Porcentaje") + 
+            ggtitle(label = "",subtitle = "Base de datos de WikiPapa.org")+
             
     
     
